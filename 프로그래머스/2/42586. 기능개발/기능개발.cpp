@@ -13,8 +13,7 @@ vector<int> solution(vector<int> progresses, vector<int> speeds) {
         pst.push_back(progresses[i]);
         sst.push_back(speeds[i]);
     }
-    
-    int done = 0;
+
     while(!pst.empty()) {
         int tmp_done = 0;
         for(int i = 0; i < pst.size(); i++) {
@@ -32,7 +31,6 @@ vector<int> solution(vector<int> progresses, vector<int> speeds) {
         
         if(tmp_done != 0) {
             answer.push_back(tmp_done);
-            done += tmp_done;
         }
     }
     
