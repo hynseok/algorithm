@@ -4,28 +4,39 @@
 
 using namespace std;
 
-int c, n;
-vector<pair<int, int> > ads(1001);
-vector<int> dp(100001);
+const int INF = 1e9;
 
 int main() {
+	ios_base::sync_with_stdio(false);
+	cin.tie(NULL);
+
+	int c, n;
 	cin >> c >> n;
 
+	vector<pair<int, int>> ads(n);
 	for(int i = 0; i < n; i++) {
 		cin >> ads[i].first >> ads[i].second;
 	}
 
+	vector<int> dp(c + 101, INF);
+	dp[0] = 0;
+
 	for(int i = 0; i < n; i++) {
-		for(int j = 1; j <= 100000; j++) {
-			int cost = ads[i].first;
-			int val = ads[i].second;
-			if(j - cost >= 0) {
-				dp[j] = max(dp[j], dp[j - cost] + val);
+		int cost = ads[i].first;
+		int val = ads[i].second;
+		for(int j = val; j < c + 101; j++) {
+			if (dp[j - val] != INF) {
+				dp[j] = min(dp[j], dp[j - val] + cost);
 			}
 		}
 	}
 
-	cout << lower_bound(dp.begin(), dp.end(), c) - dp.begin();
+	int result = INF;
+	for(int i = c; i < c + 101; i++) {
+		result = min(result, dp[i]);
+	}
+
+	cout << result;
 
 	return 0;
 }
